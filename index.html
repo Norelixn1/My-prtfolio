@@ -1,0 +1,968 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Portfolio | Personal Space</title>
+
+<style>
+:root {
+  --bg: #070a08;
+  --panel: #101612;
+  --panel2: #151e17;
+  --green: #9bffb0;
+  --text: #f3f7f4;
+  --muted: #95a398;
+  --border: #29362c;
+  --red: #ff7777;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 50% 0%, #173521 0%, transparent 42%),
+    var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+}
+
+button, input, textarea { font: inherit; }
+button { cursor: pointer; }
+
+.hidden { display: none !important; }
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 20px 6%;
+  border-bottom: 1px solid var(--border);
+  background: #080c09d9;
+}
+
+.brand {
+  color: var(--green);
+  font-weight: 800;
+  letter-spacing: 2px;
+  font-size: 18px;
+}
+
+.header-actions { display: flex; gap: 9px; }
+
+main {
+  width: min(1050px, 92%);
+  margin: 38px auto 70px;
+}
+
+.panel {
+  background: #101612ed;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 20px 70px #0004;
+}
+
+.auth {
+  width: min(430px, 100%);
+  margin: 8vh auto;
+}
+
+h1, h2, h3, p { overflow-wrap: anywhere; }
+h1 { font-size: clamp(27px, 5vw, 43px); margin: 10px 0 12px; }
+h2 { font-size: 25px; margin-top: 0; }
+h3 { margin-top: 0; }
+p { line-height: 1.65; }
+
+.muted { color: var(--muted); }
+.eyebrow {
+  color: var(--green);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+label {
+  display: block;
+  margin: 18px 0 8px;
+  color: #dbe6dd;
+  font-size: 13px;
+}
+
+input, textarea {
+  width: 100%;
+  background: #090d0a;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 13px 14px;
+  outline: none;
+}
+
+input:focus, textarea:focus { border-color: var(--green); }
+textarea { resize: vertical; min-height: 90px; }
+
+.primary, .secondary, .danger {
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 12px 16px;
+  transition: .2s;
+}
+
+.primary {
+  background: var(--green);
+  color: #07120a;
+  font-weight: 800;
+}
+
+.primary:hover { transform: translateY(-2px); }
+
+.secondary {
+  background: #172019;
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.secondary:hover { border-color: var(--green); }
+
+.danger {
+  color: var(--red);
+  background: #32191a;
+  border-color: #583032;
+}
+
+.full { width: 100%; margin-top: 22px; }
+.message { min-height: 18px; color: var(--red); font-size: 13px; }
+.small { font-size: 12px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 25px;
+}
+
+.section-card {
+  padding: 24px;
+  min-height: 205px;
+  border-radius: 17px;
+  border: 1px solid var(--border);
+  background: linear-gradient(145deg, #17231a, #0c110d);
+  transition: .25s;
+  cursor: pointer;
+}
+
+.section-card:hover {
+  border-color: var(--green);
+  transform: translateY(-4px);
+}
+
+.section-icon { font-size: 30px; margin-bottom: 23px; }
+.section-card h3 { margin-bottom: 8px; }
+.section-card p { color: var(--muted); font-size: 13px; }
+
+.profile-hero {
+  text-align: center;
+  padding: 42px 20px;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: linear-gradient(150deg, #15251a, #0c100d 75%);
+}
+
+.avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--green);
+  background: var(--panel2);
+}
+
+.portfolio-title {
+  margin: 25px 0 12px;
+  font-size: clamp(38px, 9vw, 78px);
+  letter-spacing: 5px;
+  font-weight: 900;
+  color: var(--green);
+  text-shadow: 0 0 35px #9bffb02a;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 28px 0 15px;
+}
+
+.toolbar h2 { margin: 0; }
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 16px;
+}
+
+.upload-box {
+  border: 1px dashed #536c59;
+  padding: 18px;
+  border-radius: 12px;
+  background: #0a100c;
+  margin-top: 10px;
+}
+
+.upload-box input { padding: 10px; }
+
+.items {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 25px;
+}
+
+.item {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  overflow: hidden;
+  background: #0c110e;
+}
+
+.item img {
+  display: block;
+  width: 100%;
+  max-height: 380px;
+  object-fit: contain;
+  background: #080b09;
+}
+
+.item-body { padding: 17px; }
+.item-body p { white-space: pre-wrap; }
+.item-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.empty {
+  border: 1px dashed var(--border);
+  padding: 28px;
+  margin-top: 20px;
+  text-align: center;
+  border-radius: 15px;
+  color: var(--muted);
+}
+
+.notice {
+  margin-top: 16px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #172019;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+@media (max-width: 700px) {
+  header { padding: 16px 4%; }
+  main { margin-top: 22px; }
+  .panel { padding: 20px; }
+  .grid { grid-template-columns: 1fr; }
+  .items { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
+  .portfolio-title { letter-spacing: 2px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="brand">A. / MY SPACE</div>
+  <div class="header-actions">
+    <button id="homeButton" class="secondary hidden" type="button">
+      Bosh sahifa
+    </button>
+    <button id="logoutButton" class="secondary hidden" type="button">
+      Chiqish
+    </button>
+  </div>
+</header>
+
+<main>
+  <!-- LOGIN -->
+  <section id="authScreen" class="panel auth">
+    <div class="eyebrow">Private space / 01</div>
+    <h1 id="authTitle">Create Login</h1>
+    <p id="authDescription" class="muted">
+      Portfolio yaratish uchun loginingizni kiriting.
+    </p>
+
+    <form id="authForm">
+      <div id="loginGroup">
+        <label for="loginInput">Login</label>
+        <input id="loginInput" autocomplete="username"
+          minlength="3" maxlength="40" required>
+      </div>
+
+      <div id="passwordGroup" class="hidden">
+        <label for="passwordInput">Password</label>
+        <input id="passwordInput" type="password"
+          autocomplete="new-password" minlength="8"
+          maxlength="128" required>
+        <p class="small muted">
+          Demo versiya: haqiqiy maxfiy parolingizni ishlatmang.
+        </p>
+      </div>
+
+      <button id="authContinue" class="primary full" type="submit">
+        Continue →
+      </button>
+    </form>
+
+    <button id="editCredentials" class="secondary full hidden"
+      type="button">Login / Password ni o‘zgartirish</button>
+
+    <p id="authMessage" class="message" role="status"></p>
+  </section>
+
+  <!-- PROFILE SETUP -->
+  <section id="profileScreen" class="panel hidden">
+    <div class="eyebrow">Step 02 / Your identity</div>
+    <h1>O‘zingiz haqingizda</h1>
+    <p class="muted">
+      Ma’lumotlaringizni kiriting va profilingiz uchun rasm tanlang.
+    </p>
+
+    <form id="profileForm">
+      <div class="form-grid">
+        <div>
+          <label for="surname">Familiyangiz</label>
+          <input id="surname" required maxlength="60"
+            placeholder="Familiyangiz">
+        </div>
+        <div>
+          <label for="firstName">Ismingiz</label>
+          <input id="firstName" required maxlength="60"
+            placeholder="Ismingiz">
+        </div>
+        <div>
+          <label for="age">Yoshingiz</label>
+          <input id="age" type="number" required min="1" max="120"
+            placeholder="Yoshingiz">
+        </div>
+      </div>
+
+      <label for="profileImage">Rasmingizni joylang</label>
+      <div class="upload-box">
+        <input id="profileImage" type="file"
+          accept="image/*">
+        <p class="small muted">JPG, PNG yoki boshqa rasm formati.</p>
+        <img id="profilePreview" class="avatar hidden"
+          alt="Tanlangan profil rasmi" style="margin-top:15px">
+      </div>
+
+      <p id="profileMessage" class="message"></p>
+      <button class="primary full" type="submit">
+        Profilni saqlash →
+      </button>
+    </form>
+  </section>
+
+  <!-- PORTFOLIO HOME -->
+  <section id="portfolioScreen" class="hidden">
+    <div class="profile-hero">
+      <img id="heroImage" class="avatar" alt="Profil rasmi">
+      <h1 id="heroName"></h1>
+      <p id="heroDetails" class="muted"></p>
+      <div class="portfolio-title">PORTFOLIO</div>
+      <p class="muted">My journey. My work. My future.</p>
+      <button id="viewPortfolio" class="primary" type="button"
+        style="margin-top:20px">
+        Portfolio ni ko‘rish →
+      </button>
+    </div>
+
+    <div id="sectionGrid" class="grid hidden">
+      <article class="section-card" data-section="volunteer">
+        <div class="section-icon">🌍</div>
+        <h3>Volontyorlik</h3>
+        <p>Ko‘ngillilik tajribasi, tadbirlar va faoliyatlar.</p>
+      </article>
+
+      <article class="section-card" data-section="certificates">
+        <div class="section-icon">🏆</div>
+        <h3>Sertifikatlar</h3>
+        <p>Yutuqlar, kurslar va sertifikatlaringiz.</p>
+      </article>
+
+      <article class="section-card" data-section="projects">
+        <div class="section-icon">💻</div>
+        <h3>Loyihalarim</h3>
+        <p>Website, dasturlar va boshqa ishlaringiz.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- SECTION DETAILS -->
+  <section id="detailScreen" class="panel hidden">
+    <div class="eyebrow">Portfolio / Collection</div>
+    <div class="toolbar">
+      <div>
+        <h2 id="detailTitle">Volontyorlik</h2>
+        <p id="detailDescription" class="muted"></p>
+      </div>
+      <button id="backToSections" class="secondary" type="button">
+        ← Orqaga
+      </button>
+    </div>
+
+    <form id="itemForm">
+      <label id="itemImageLabel" for="itemImage">Rasm yuklash</label>
+      <div class="upload-box">
+        <input id="itemImage" type="file" accept="image/*">
+        <img id="itemPreview" class="hidden"
+          alt="Tanlangan rasm"
+          style="max-width:100%;max-height:220px;object-fit:contain;margin-top:12px">
+      </div>
+
+      <label id="itemTitleLabel" for="itemTitle">Sarlavha</label>
+      <input id="itemTitle" maxlength="120"
+        placeholder="Masalan: Ekologik aksiya">
+
+      <label for="itemComment">Kommentariya / Izoh</label>
+      <textarea id="itemComment" maxlength="5000"
+        placeholder="Bu yerda batafsil ma’lumot yozishingiz mumkin..."></textarea>
+
+      <p id="itemMessage" class="message"></p>
+      <button class="primary full" type="submit" id="saveItemButton">
+        + Qo‘shish
+      </button>
+    </form>
+
+    <div class="toolbar">
+      <h2>Joylangan materiallar</h2>
+      <span id="itemCount" class="muted small">0 ta</span>
+    </div>
+
+    <div id="itemList" class="items"></div>
+    <div id="emptyItems" class="empty">
+      Hozircha materiallar yo‘q. Birinchisini qo‘shing!
+    </div>
+  </section>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const screens = [
+  "authScreen",
+  "profileScreen",
+  "portfolioScreen",
+  "detailScreen"
+];
+
+let authStep = "login";
+let account = null;
+let profile = null;
+let currentSection = "volunteer";
+let currentImageData = "";
+let itemImageData = "";
+let editingItemId = null;
+
+let db;
+
+const sectionInfo = {
+  volunteer: {
+    title: "Volontyorlik",
+    description: "Ko‘ngillilik faoliyatingiz va tajribangiz.",
+    imageLabel: "Faoliyat rasmini yuklash",
+    titleLabel: "Faoliyat nomi",
+    placeholder: "Masalan: Daraxt ekish aksiyasi"
+  },
+  certificates: {
+    title: "Sertifikatlar",
+    description: "Sertifikat va o‘quv yutuqlaringiz.",
+    imageLabel: "Sertifikat rasmini yuklash",
+    titleLabel: "Sertifikat nomi",
+    placeholder: "Masalan: IELTS Preparation Course"
+  },
+  projects: {
+    title: "Loyihalarim",
+    description: "Dasturlar, website’lar va shaxsiy ishlaringiz.",
+    imageLabel: "Loyiha rasmini yuklash",
+    titleLabel: "Loyiha nomi",
+    placeholder: "Masalan: My First Website"
+  }
+};
+
+// IndexedDB katta hajmdagi rasm va ma'lumotlarni saqlash uchun.
+function openDatabase() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open("MyPortfolioDatabase", 1);
+
+    request.onupgradeneeded = () => {
+      const database = request.result;
+      if (!database.objectStoreNames.contains("data")) {
+        database.createObjectStore("data");
+      }
+    };
+
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+function dbGet(key) {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction("data", "readonly");
+    const request = tx.objectStore("data").get(key);
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+function dbSet(key, value) {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction("data", "readwrite");
+    tx.objectStore("data").put(value, key);
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+    tx.onabort = () => reject(tx.error || new Error("Saqlash bekor qilindi"));
+  });
+}
+
+function showScreen(id) {
+  screens.forEach(screen => $(screen).classList.add("hidden"));
+  $(id).classList.remove("hidden");
+
+  const inside = id !== "authScreen";
+  $("homeButton").classList.toggle("hidden", !inside);
+  $("logoutButton").classList.toggle("hidden", !account);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function readLocalAccount() {
+  try {
+    const saved = localStorage.getItem("access_demo_account");
+    if (!saved) return null;
+
+    const parsed = JSON.parse(saved);
+    if (typeof parsed.login === "string" &&
+        typeof parsed.password === "string") {
+      return parsed;
+    }
+  } catch (error) {
+    console.warn("Saved demo account could not be read.");
+  }
+
+  return null;
+}
+
+function prepareAuth() {
+  account = readLocalAccount();
+  authStep = "login";
+
+  $("loginInput").value = account?.login || "";
+  $("passwordInput").value = account?.password || "";
+  $("passwordGroup").classList.add("hidden");
+  $("loginGroup").classList.remove("hidden");
+  $("authMessage").textContent = "";
+  $("authContinue").classList.remove("hidden");
+
+  $("authTitle").textContent = account ? "Welcome Back" : "Create Login";
+  $("authDescription").textContent = account
+    ? "Saqlangan loginingizni tekshiring va davom eting."
+    : "Portfolio yaratish uchun loginingizni kiriting.";
+
+  $("editCredentials").classList.toggle("hidden", !account);
+}
+
+$("authForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  $("authMessage").textContent = "";
+
+  if (authStep === "login") {
+    const login = $("loginInput").value.trim();
+
+    if (login.length < 3) {
+      $("authMessage").textContent =
+        "Login kamida 3 ta belgidan iborat bo‘lishi kerak.";
+      return;
+    }
+
+    $("loginInput").value = login;
+    authStep = "password";
+    $("loginGroup").classList.add("hidden");
+    $("passwordGroup").classList.remove("hidden");
+    $("authTitle").textContent = account ? "Enter Password" : "Create Password";
+    $("authDescription").textContent = account
+      ? "Davom etish uchun saqlangan demo passwordni kiriting."
+      : "Kamida 8 ta belgidan iborat demo password yarating.";
+    $("passwordInput").value = account ? account.password : "";
+    $("passwordInput").focus();
+    return;
+  }
+
+  const password = $("passwordInput").value;
+
+  if (password.length < 8) {
+    $("authMessage").textContent =
+      "Password kamida 8 ta belgidan iborat bo‘lishi kerak.";
+    return;
+  }
+
+  const newAccount = {
+    login: $("loginInput").value.trim(),
+    password
+  };
+
+  try {
+    // Bu faqat lokal demo. Production uchun backend kerak.
+    localStorage.setItem("access_demo_account", JSON.stringify(newAccount));
+    account = newAccount;
+    $("logoutButton").classList.remove("hidden");
+
+    profile = await dbGet("profile") || null;
+
+    if (profile) {
+      fillProfile(profile);
+      showPortfolio();
+    } else {
+      $("profileForm").reset();
+      currentImageData = "";
+      $("profilePreview").classList.add("hidden");
+      showScreen("profileScreen");
+    }
+  } catch (error) {
+    $("authMessage").textContent =
+      "Ma’lumotni saqlashda muammo bo‘ldi. Brauzer sozlamalarini tekshiring.";
+  }
+});
+
+$("editCredentials").addEventListener("click", () => {
+  account = null;
+  $("loginInput").value = "";
+  $("passwordInput").value = "";
+  $("authStep");
+  authStep = "login";
+  $("loginGroup").classList.remove("hidden");
+  $("passwordGroup").classList.add("hidden");
+  $("authTitle").textContent = "Edit Login";
+  $("authDescription").textContent = "Yangi login va passwordni kiriting.";
+  $("editCredentials").classList.add("hidden");
+});
+
+function readImage(file) {
+  return new Promise((resolve, reject) => {
+    if (!file) return resolve("");
+    if (!file.type.startsWith("image/")) {
+      return reject(new Error("Faqat rasm faylini tanlang."));
+    }
+
+    // Katta rasmlar xotirani to‘ldirmasligi uchun cheklov.
+    if (file.size > 8 * 1024 * 1024) {
+      return reject(new Error("Rasm 8 MB dan kichik bo‘lishi kerak."));
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(new Error("Rasmni o‘qib bo‘lmadi."));
+    reader.readAsDataURL(file);
+  });
+}
+
+$("profileImage").addEventListener("change", async event => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  try {
+    currentImageData = await readImage(file);
+    $("profilePreview").src = currentImageData;
+    $("profilePreview").classList.remove("hidden");
+    $("profileMessage").textContent = "";
+  } catch (error) {
+    $("profileMessage").textContent = error.message;
+  }
+});
+
+$("profileForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  $("profileMessage").textContent = "";
+
+  const firstName = $("firstName").value.trim();
+  const surname = $("surname").value.trim();
+  const age = Number($("age").value);
+
+  if (!firstName || !surname || !Number.isInteger(age) || age < 1 || age > 120) {
+    $("profileMessage").textContent = "Ma’lumotlarni to‘g‘ri kiriting.";
+    return;
+  }
+
+  if (!currentImageData && !profile?.image) {
+    $("profileMessage").textContent = "Iltimos, profil rasmini tanlang.";
+    return;
+  }
+
+  profile = {
+    firstName,
+    surname,
+    age,
+    image: currentImageData || profile.image
+  };
+
+  try {
+    await dbSet("profile", profile);
+    showPortfolio();
+  } catch (error) {
+    $("profileMessage").textContent =
+      "Profil saqlanmadi. Brauzer xotirasida joy yetmasligi mumkin.";
+  }
+});
+
+function fillProfile(data) {
+  $("firstName").value = data.firstName || "";
+  $("surname").value = data.surname || "";
+  $("age").value = data.age || "";
+  currentImageData = data.image || "";
+  $("profilePreview").src = currentImageData;
+  $("profilePreview").classList.toggle("hidden", !currentImageData);
+}
+
+function showPortfolio() {
+  if (!profile) {
+    showScreen("profileScreen");
+    return;
+  }
+
+  $("heroImage").src = profile.image;
+  $("heroName").textContent = `${profile.firstName} ${profile.surname}`;
+  $("heroDetails").textContent = `Yosh: ${profile.age}`;
+
+  $("viewPortfolio").classList.remove("hidden");
+  $("sectionGrid").classList.add("hidden");
+  showScreen("portfolioScreen");
+}
+
+$("viewPortfolio").addEventListener("click", () => {
+  $("sectionGrid").classList.remove("hidden");
+  $("viewPortfolio").classList.add("hidden");
+  $("sectionGrid").scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+$("sectionGrid").addEventListener("click", event => {
+  const card = event.target.closest("[data-section]");
+  if (card) openSection(card.dataset.section);
+});
+
+async function openSection(section) {
+  currentSection = section;
+  editingItemId = null;
+  itemImageData = "";
+  $("itemForm").reset();
+  $("itemPreview").classList.add("hidden");
+  $("itemMessage").textContent = "";
+  $("saveItemButton").textContent = "+ Qo‘shish";
+
+  const info = sectionInfo[section];
+  $("detailTitle").textContent = info.title;
+  $("detailDescription").textContent = info.description;
+  $("itemImageLabel").textContent = info.imageLabel;
+  $("itemTitleLabel").textContent = info.titleLabel;
+  $("itemTitle").placeholder = info.placeholder;
+
+  $("itemTitle").required = true;
+  $("itemImage").required = false;
+
+  showScreen("detailScreen");
+  await renderItems();
+}
+
+$("itemImage").addEventListener("change", async event => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  try {
+    itemImageData = await readImage(file);
+    $("itemPreview").src = itemImageData;
+    $("itemPreview").classList.remove("hidden");
+    $("itemMessage").textContent = "";
+  } catch (error) {
+    $("itemMessage").textContent = error.message;
+  }
+});
+
+function makeId() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2);
+}
+
+$("itemForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  $("itemMessage").textContent = "";
+
+  const title = $("itemTitle").value.trim();
+  const comment = $("itemComment").value.trim();
+
+  if (!title) {
+    $("itemMessage").textContent = "Sarlavhani kiriting.";
+    return;
+  }
+
+  if (!comment && !itemImageData && !editingItemId) {
+    $("itemMessage").textContent =
+      "Rasm yoki izohdan kamida bittasini qo‘shing.";
+    return;
+  }
+
+  try {
+    const items = await dbGet(currentSection) || [];
+    let updated;
+
+    if (editingItemId) {
+      updated = items.map(item => item.id === editingItemId
+        ? {
+            ...item,
+            title,
+            comment,
+            image: itemImageData || item.image || ""
+          }
+        : item);
+    } else {
+      updated = [{
+        id: makeId(),
+        title,
+        comment,
+        image: itemImageData,
+        createdAt: new Date().toISOString()
+      }, ...items];
+    }
+
+    await dbSet(currentSection, updated);
+
+    $("itemForm").reset();
+    $("itemPreview").classList.add("hidden");
+    itemImageData = "";
+    editingItemId = null;
+    $("saveItemButton").textContent = "+ Qo‘shish";
+    $("itemMessage").textContent = "";
+    await renderItems();
+  } catch (error) {
+    $("itemMessage").textContent =
+      "Saqlash amalga oshmadi. Brauzer xotirasini tekshiring.";
+  }
+});
+
+async function renderItems() {
+  const items = await dbGet(currentSection) || [];
+  const list = $("itemList");
+  list.replaceChildren();
+
+  $("itemCount").textContent = `${items.length} ta`;
+  $("emptyItems").classList.toggle("hidden", items.length > 0);
+
+  for (const item of items) {
+    const article = document.createElement("article");
+    article.className = "item";
+
+    if (item.image) {
+      const img = document.createElement("img");
+      img.src = item.image;
+      img.alt = item.title;
+      img.loading = "lazy";
+      article.appendChild(img);
+    }
+
+    const body = document.createElement("div");
+    body.className = "item-body";
+
+    const title = document.createElement("h3");
+    title.textContent = item.title;
+
+    const comment = document.createElement("p");
+    comment.className = "muted";
+    comment.textContent = item.comment || "Izoh kiritilmagan.";
+
+    const actions = document.createElement("div");
+    actions.className = "item-actions";
+
+    const edit = document.createElement("button");
+    edit.className = "secondary";
+    edit.type = "button";
+    edit.textContent = "Tahrirlash";
+    edit.addEventListener("click", () => editItem(item));
+
+    const remove = document.createElement("button");
+    remove.className = "danger";
+    remove.type = "button";
+    remove.textContent = "O‘chirish";
+    remove.addEventListener("click", () => deleteItem(item.id));
+
+    actions.append(edit, remove);
+    body.append(title, comment, actions);
+    article.appendChild(body);
+    list.appendChild(article);
+  }
+}
+
+function editItem(item) {
+  editingItemId = item.id;
+  itemImageData = item.image || "";
+
+  $("itemTitle").value = item.title;
+  $("itemComment").value = item.comment || "";
+  $("itemMessage").textContent = "";
+  $("saveItemButton").textContent = "O‘zgarishlarni saqlash";
+
+  if (item.image) {
+    $("itemPreview").src = item.image;
+    $("itemPreview").classList.remove("hidden");
+  } else {
+    $("itemPreview").classList.add("hidden");
+  }
+
+  $("itemForm").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+async function deleteItem(id) {
+  if (!confirm("Bu materialni o‘chirmoqchimisiz?")) return;
+
+  const items = await dbGet(currentSection) || [];
+  await dbSet(currentSection, items.filter(item => item.id !== id));
+  await renderItems();
+}
+
+$("backToSections").addEventListener("click", () => {
+  showPortfolio();
+  $("sectionGrid").classList.remove("hidden");
+  $("viewPortfolio").classList.add("hidden");
+});
+
+$("homeButton").addEventListener("click", () => {
+  if (profile) showPortfolio();
+  else showScreen("profileScreen");
+});
+
+$("logoutButton").addEventListener("click", () => {
+  // Faqat sessiyadan chiqadi; demo login saqlanib qoladi.
+  prepareAuth();
+  showScreen("authScreen");
+});
+
+async function startApp() {
+  try {
+    db = await openDatabase();
+    profile = await dbGet("profile") || null;
+
+    prepareAuth();
+    showScreen("authScreen");
+  } catch (error) {
+    document.body.innerHTML =
+      "<main><h1>Browser storage is unavailable</h1>" +
+      "<p>IndexedDB yoqilgan brauzerda sahifani qayta oching.</p></main>";
+  }
+}
+
+startApp();
+</script>
+</body>
+</html>
